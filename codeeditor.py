@@ -582,7 +582,7 @@ class MegasolidCodeEditor( MegasolidEditor ):
 
         return info
 
-    def on_link_clicked(self, url):
+    def on_link_clicked(self, url, evt):
         print('clicked:', url)
         if url.isdigit():
             index = int(url)
