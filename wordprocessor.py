@@ -104,7 +104,7 @@ class TextEdit(QTextEdit):
     def mouseReleaseEvent(self, e):
         if self.anchor:
             if hasattr(self, 'on_link_clicked'):
-                self.on_link_clicked(self.anchor)
+                self.on_link_clicked(self.anchor, e)
             else:
                 print('clicked anchor href:', self.anchor)
                 webbrowser.open(self.anchor)
