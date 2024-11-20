@@ -136,7 +136,7 @@ class MegasolidCodeEditor( MegasolidEditor ):
         self.blends = []
 
         self.timer = QTimer()
-        self.timer.timeout.connect(self.loop)
+        self.timer.timeout.connect(self.do_syntax_hl)
         self.timer.start(3000)
         self.prev_html = None
         self.use_syntax_highlight = True
@@ -250,7 +250,7 @@ class MegasolidCodeEditor( MegasolidEditor ):
     OBJ_TABLE = '▦' #'\x00'
     #OBJ_BLEND = '🮵'  ## no font on MS Windows for this :(
     BLEND_SYMS = 'ก ข ฃ ค ฅ ฆ ง จ ฉ ช ฌ ญ ฎ ฐ ฑ ฒ ณ ต ถ ธ ฤ ป ผ ฝ ฟ ภ ย ล ฦ ว ศ ษ ส ห ฬ อ ฮ ฯ'.split()
-    def loop(self):
+    def do_syntax_hl(self):
         if not self.use_syntax_highlight:
             return
         h = self.editor.toHtml()
