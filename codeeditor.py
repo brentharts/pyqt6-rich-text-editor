@@ -374,19 +374,26 @@ class MegasolidCodeEditor( MegasolidEditor ):
             o = []
             lines = []
             for idx, ln in enumerate(html.split('<br/>')):
-                if '{' in ln and ln.count('{')==ln.count('}'):
+                if '{' in ln and ln.count('{')==ln.count('}') and ln.index('{') < ln.index('}'):
                     ln = ln.replace('{', '{<u style="background-color:blue">')
                     ln = ln.replace('}', '</u>}')
                 o.append(ln)
                 lines.append(str(idx+1))
-            self.line_counts.setText( "<p style='line-height: 1.1;'>%s</p>" % '<br/>'.join(lines))
+
+            ## TODO: this is just a quick fix, this should be synced with the scroll bar of the text widget
+            if len(lines) <= 32:
+                self.line_counts.setText( "<p style='line-height: 1.1;'>%s</p>" % '<br/>'.join(lines))
+            else:
+                lines = lines[:32] + ['...', str(len(lines))]
+                self.line_counts.setText( "<p style='line-height: 1.1;'>%s</p>" % '<br/>'.join(lines))
             html = '<br/>'.join(o)
 
             html = html.replace('[', '[<b style="background-color:purple">')
             html = html.replace(']', '</b>]')
 
-            html = html.replace('(', '<i style="background-color:black">(')
-            html = html.replace(')', ')</i>')
+            if html.count('(')==html.count(')'):
+                html = html.replace('(', '<i style="background-color:gray; color:black">(')
+                html = html.replace(')', ')</i>')
 
             if self.on_syntax_highlight_post:
                 html = self.on_syntax_highlight_post(html)
